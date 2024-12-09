@@ -35,7 +35,7 @@ information about your implementation.
  
 # How run solution of this test
 
-You should have JDK, Maven, Docker, and Git installed on your computer to run this test. 
+You should have JDK 17+, Maven, Docker, and Git installed on your computer to run this test. 
 
 Create a new directory and move to it
 ```
@@ -47,18 +47,18 @@ Clone all artifacts from GitHab repository
 git clone https://github.com/VladGural/java-test-wamisoftware-test-figure
 ```
 
-Build and put all services in the local maven repo. 
-Meanwhile, it will start component tests for Company and Analytic services.
+Build and put figure service in the local maven repo. 
+Meanwhile, it will start component tests for Figure service.
 ```
 mvn -f ./java-test-wamisoftware-test-figure/pom.xml clean install
 ```
 
-Create docker images for Figure service
+Create docker image for Figure service
 ```
 docker build -t figure-service ./java-test-wamisoftware-test-figure/.
 ```
 
-And now run services in docker containers
+And now run service in docker containers
 ```
 docker compose -f ./java-test-wamisoftware-test-figure/compose.yaml up --detach
 ```
@@ -70,92 +70,81 @@ docker ps
 
 And if everything was done correctly we will see something like this.
 ```
-CONTAINER ID   IMAGE                              COMMAND                  CREATED          STATUS          PORTS                                                               NAMES
-3800d7990512   analytic-service                   "/__cacert_entrypoin…"   49 seconds ago   Up 49 seconds   0.0.0.0:8081->80/tcp, [::]:8081->80/tcp                             analytic-service
-278099ea88f1   company-service                    "/__cacert_entrypoin…"   49 seconds ago   Up 49 seconds   0.0.0.0:8080->80/tcp, [::]:8080->80/tcp                             company-service
-7653491a7d7d   confluentinc/cp-kafka:latest       "/etc/confluent/dock…"   49 seconds ago   Up 49 seconds   0.0.0.0:9092->9092/tcp, :::9092->9092/tcp                           kafka
-01599f916f96   confluentinc/cp-zookeeper:latest   "/etc/confluent/dock…"   50 seconds ago   Up 49 seconds   2888/tcp, 3888/tcp, 0.0.0.0:22181->2181/tcp, [::]:22181->2181/tcp   zookeeper
-d88dd6174c9c   postgres:16                        "docker-entrypoint.s…"   50 seconds ago   Up 49 seconds   0.0.0.0:55432->5432/tcp, [::]:55432->5432/tcp                       postgres-company
-fd8429babf20   postgres:16                        "docker-entrypoint.s…"   50 seconds ago   Up 49 seconds   0.0.0.0:54432->5432/tcp, [::]:54432->5432/tcp                       postgres-analytic
+CONTAINER ID   IMAGE            COMMAND                  CREATED          STATUS          PORTS                                     NAMES
+e27c83222927   figure-service   "/__cacert_entrypoin…"   15 seconds ago   Up 14 seconds   0.0.0.0:8080->80/tcp, [::]:8080->80/tcp   figure-service
 ```
 
-Our services are running!!!
+Our service are running!!!
 
 For testing we can use postmen
 ```
-CREATE COMPANY
-URL: http://localhost:8080/v1/companies
+REQUEST
+CALCULATE SQUARE PROPERTIES
+URL: http://localhost:8080/v1/figures/properties
 METHOD: POST
 REQUEST:
 {
-    "name": "Alis",
-    "status": "ACTIVE",
-    "contactInformation": "phone: +380503332211, mail: info@alis.pro",
-    "industry": "food",
-    "companyAddress": [
-        {
-            "country": "Ukraine",
-            "city": "Kyiv",
-            "street": "Vasilya Tutunnika",
-            "zip": "03150",
-            "addressCategory": [
-                "HEADQUARTER",
-                "DISTRIBUTION_CENTER"
-            ]
-        },
-        {
-            "country": "Ukraine",
-            "city": "Lviv",
-            "street": "Velika Gora",
-            "zip": "02011",
-            "addressCategory": [
-                "HEADQUARTER"
-            ]
-        }
-    ]
+    "figureType": "SQUARE",
+    "figureRequestParam": "{\"length\":10.0}"
+}
+
+RESPONSE
+{
+    "area": 100.0,
+    "perimeter": 40.0
 }
 ```
 
 ```
-GET CURRENT NAME
-URL: http://localhost:8081/v1/companies/{ID_YOUR_COMPANY_CREATED_ABOVE}/current-names
-METHOD: GET
-RESPONSE:
+REQUEST
+CALCULATE RECTANGLE PROPERTIES
+URL: http://localhost:8080/v1/figures/properties
+METHOD: POST
+REQUEST:
 {
-    "currentName": "Alis"
+    "figureType": "RECTANGLE",
+    "figureRequestParam": "{\"alength\":10.0,\"blength\":20.0}"
+}
+
+RESPONSE
+{
+    "area": 200.0,
+    "perimeter": 60.0
 }
 ```
 
 ```
-GET PREVIOUS NAMES
-URL: http://localhost:8081/v1/companies/{ID_YOUR_COMPANY_CREATED_ABOVE}/names
-METHOD: GET
-RESPONSE:
+REQUEST
+CALCULATE TRIANGLE PROPERTIES
+URL: http://localhost:8080/v1/figures/properties
+METHOD: POST
+REQUEST:
 {
-    "currentName": "Alis",
-    "previousNames": []
+    "figureType": "TRIANGLE",
+    "figureRequestParam": "{\"alength\":3.0,\"blength\":4.0,\"blength\":5.0}"
+}
+
+RESPONSE
+{
+    "area": 6.0,
+    "perimeter": 12.0
 }
 ```
 
 ```
-GET ADDRESS CATEGORY STAT
-URL: http://localhost:8081/v1/companies/{ID_YOUR_COMPANY_CREATED_ABOVE}/address-category-stats
-METHOD: GET
-RESPONSE:
+REQUEST
+CALCULATE CIRCLE PROPERTIES
+URL: http://localhost:8080/v1/figures/properties
+METHOD: POST
+REQUEST:
 {
-    "addressCategoryStat": {
-        "DISTRIBUTION_CENTER": 1,
-        "HEADQUARTER": 2
-    }
+    "figureType": "CIRCLE",
+    "figureRequestParam": "{\"radius\":1.0}"
 }
-```
 
-```
-GET CURRENT STATUS
-URL: http://localhost:8081/v1/companies/{ID_YOUR_COMPANY_CREATED_ABOVE}/current-statuses
-METHOD: GET
-RESPONSE:
+RESPONSE
 {
-    "currentStatus": "ACTIVE"
+    "area": 3.141592653589793,
+    "perimeter": 6.283185307179586
 }
 ```
