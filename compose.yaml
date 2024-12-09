@@ -1,0 +1,9 @@
+version: '3'
+services:
+
+  figure-service:
+    hostname: figure-service
+    container_name: figure-service
+    image: figure-service
+    ports:
+      - "8080:80"
