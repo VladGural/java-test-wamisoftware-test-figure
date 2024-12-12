@@ -1,5 +1,6 @@
 package com.example.figure.figure;
 
+import com.example.figure.domain.FigureCalculateService;
 import com.example.figure.domain.type.FigureType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

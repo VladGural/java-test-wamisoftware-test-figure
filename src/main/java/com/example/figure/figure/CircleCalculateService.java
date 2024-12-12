@@ -1,8 +1,8 @@
 package com.example.figure.figure;
 
-import com.example.figure.domain.CalculateRequest;
-import com.example.figure.domain.CalculateResponse;
-import com.example.figure.util.Util;
+import com.example.figure.domain.FigureCalculateRequest;
+import com.example.figure.domain.FigureCalculateResponse;
+import com.example.figure.domain.FigureCalculateService;
 
 /**
  * @author Vladyslav Gural
@@ -11,9 +11,10 @@ import com.example.figure.util.Util;
 public class CircleCalculateService implements FigureCalculateService {
 
     @Override
-    public CalculateResponse calculate(CalculateRequest request) {
-        CircleParam circle = Util.fromJson(request.getFigureRequestParam(), CircleParam.class);
-        CalculateResponse calculateResponse = new CalculateResponse();
+    public FigureCalculateResponse calculate(FigureCalculateRequest request) {
+        FigureCalculateRequest.CircleFigureCalculateRequest circle =
+                (FigureCalculateRequest.CircleFigureCalculateRequest) request;
+        FigureCalculateResponse calculateResponse = new FigureCalculateResponse();
         calculateResponse.setArea(Math.PI * Math.pow(circle.getRadius(), 2));
         calculateResponse.setPerimeter(2 * Math.PI * circle.getRadius());
         return calculateResponse;

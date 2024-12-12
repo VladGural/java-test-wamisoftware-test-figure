@@ -4,7 +4,7 @@ package com.example.figure.domain;
  * @author Vladyslav Gural
  * @version 2024-12-12
  */
-public class CalculateResponse {
+public class FigureCalculateResponse {
     private Double area;
     private Double perimeter;
 
@@ -12,7 +12,7 @@ public class CalculateResponse {
         return area;
     }
 
-    public CalculateResponse setArea(Double area) {
+    public FigureCalculateResponse setArea(Double area) {
         this.area = area;
         return this;
     }
@@ -21,7 +21,7 @@ public class CalculateResponse {
         return perimeter;
     }
 
-    public CalculateResponse setPerimeter(Double perimeter) {
+    public FigureCalculateResponse setPerimeter(Double perimeter) {
         this.perimeter = perimeter;
         return this;
     }

@@ -1,8 +1,8 @@
 package com.example.figure.figure;
 
-import com.example.figure.domain.CalculateRequest;
-import com.example.figure.domain.CalculateResponse;
-import com.example.figure.util.Util;
+import com.example.figure.domain.FigureCalculateRequest;
+import com.example.figure.domain.FigureCalculateResponse;
+import com.example.figure.domain.FigureCalculateService;
 
 /**
  * @author Vladyslav Gural
@@ -11,9 +11,10 @@ import com.example.figure.util.Util;
 public class RectangleCalculateService implements FigureCalculateService {
 
     @Override
-    public CalculateResponse calculate(CalculateRequest request) {
-        RectangleParam rectangle = Util.fromJson(request.getFigureRequestParam(), RectangleParam.class);
-        CalculateResponse calculateResponse = new CalculateResponse();
+    public FigureCalculateResponse calculate(FigureCalculateRequest request) {
+        FigureCalculateRequest.RectangleFigureCalculateRequest rectangle =
+                (FigureCalculateRequest.RectangleFigureCalculateRequest) request;
+        FigureCalculateResponse calculateResponse = new FigureCalculateResponse();
         calculateResponse.setArea(rectangle.getALength() * rectangle.getBLength());
         calculateResponse.setPerimeter(rectangle.getALength() * 2 + rectangle.getBLength() * 2);
         return calculateResponse;

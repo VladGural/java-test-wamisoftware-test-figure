@@ -1,13 +1,9 @@
 package com.example.figure.calculate;
 
 import com.example.figure.component_test.BaseComponentTest;
-import com.example.figure.domain.CalculateRequest;
-import com.example.figure.domain.CalculateResponse;
+import com.example.figure.domain.FigureCalculateRequest;
+import com.example.figure.domain.FigureCalculateResponse;
 import com.example.figure.domain.type.FigureType;
-import com.example.figure.figure.CircleParam;
-import com.example.figure.figure.RectangleParam;
-import com.example.figure.figure.SquareParam;
-import com.example.figure.figure.TriangleParam;
 import com.example.figure.util.Util;
 import org.springframework.http.HttpStatus;
 
@@ -22,12 +18,12 @@ public class CalculateClient {
 
     public static void calculateSquareProperties(BaseComponentTest rest, double length) throws Exception {
         String url = "/v1/figures/properties";
-        SquareParam squareParam = new SquareParam().setLength(length);
-        CalculateRequest req = new CalculateRequest()
-                .setFigureType(FigureType.SQUARE)
-                .setFigureRequestParam(Util.toJson(squareParam));
-        String post = rest.post(url, req, HttpStatus.CREATED);
-        CalculateResponse calculateResponse = Util.fromJson(post, CalculateResponse.class);
+        FigureCalculateRequest.SquareFigureCalculateRequest squareFigureCalculateRequest =
+                new FigureCalculateRequest.SquareFigureCalculateRequest();
+        squareFigureCalculateRequest.setFigureType(FigureType.SQUARE);
+        squareFigureCalculateRequest.setLength(length);
+        String post = rest.post(url, squareFigureCalculateRequest, HttpStatus.CREATED);
+        FigureCalculateResponse calculateResponse = Util.fromJson(post, FigureCalculateResponse.class);
         assertThat(calculateResponse.getArea(), closeTo(Math.pow(length, 2), 0.001));
         assertThat(calculateResponse.getPerimeter(), closeTo(length * 4, 0.001));
     }
@@ -35,12 +31,13 @@ public class CalculateClient {
     public static void calculateRectangleProperties(BaseComponentTest rest, double aLength,
                                                     double bLength) throws Exception {
         String url = "/v1/figures/properties";
-        RectangleParam rectangleParam = new RectangleParam().setALength(aLength).setBLength(bLength);
-        CalculateRequest req = new CalculateRequest()
-                .setFigureType(FigureType.RECTANGLE)
-                .setFigureRequestParam(Util.toJson(rectangleParam));
-        String post = rest.post(url, req, HttpStatus.CREATED);
-        CalculateResponse calculateResponse = Util.fromJson(post, CalculateResponse.class);
+        FigureCalculateRequest.RectangleFigureCalculateRequest rectangleFigureCalculateRequest =
+                new FigureCalculateRequest.RectangleFigureCalculateRequest();
+        rectangleFigureCalculateRequest.setFigureType(FigureType.RECTANGLE);
+        rectangleFigureCalculateRequest.setALength(aLength);
+        rectangleFigureCalculateRequest.setBLength(bLength);
+        String post = rest.post(url, rectangleFigureCalculateRequest, HttpStatus.CREATED);
+        FigureCalculateResponse calculateResponse = Util.fromJson(post, FigureCalculateResponse.class);
         assertThat(calculateResponse.getArea(), closeTo(aLength * bLength, 0.001));
         assertThat(calculateResponse.getPerimeter(), closeTo(aLength * 2 + bLength * 2, 0.001));
     }
@@ -48,12 +45,14 @@ public class CalculateClient {
     public static void calculateTriangleProperties(BaseComponentTest rest, double aLength,
                                                    double bLength, double cLength) throws Exception {
         String url = "/v1/figures/properties";
-        TriangleParam triangleParam = new TriangleParam().setALength(aLength).setBLength(bLength).setCLength(cLength);
-        CalculateRequest req = new CalculateRequest()
-                .setFigureType(FigureType.TRIANGLE)
-                .setFigureRequestParam(Util.toJson(triangleParam));
-        String post = rest.post(url, req, HttpStatus.CREATED);
-        CalculateResponse calculateResponse = Util.fromJson(post, CalculateResponse.class);
+        FigureCalculateRequest.TriangleFigureCalculateRequest triangleFigureCalculateRequest =
+                new FigureCalculateRequest.TriangleFigureCalculateRequest();
+        triangleFigureCalculateRequest.setFigureType(FigureType.TRIANGLE);
+        triangleFigureCalculateRequest.setALength(aLength);
+        triangleFigureCalculateRequest.setBLength(bLength);
+        triangleFigureCalculateRequest.setCLength(cLength);
+        String post = rest.post(url, triangleFigureCalculateRequest, HttpStatus.CREATED);
+        FigureCalculateResponse calculateResponse = Util.fromJson(post, FigureCalculateResponse.class);
         double p = aLength + bLength + cLength;
         double halfP = p / 2;
         assertThat(calculateResponse.getArea(), closeTo(Math.sqrt(halfP * (halfP - aLength) * (halfP - bLength) *
@@ -63,12 +62,12 @@ public class CalculateClient {
 
     public static void calculateCircleProperties(BaseComponentTest rest, double radius) throws Exception {
         String url = "/v1/figures/properties";
-        CircleParam circleParam = new CircleParam().setRadius(radius);
-        CalculateRequest req = new CalculateRequest()
-                .setFigureType(FigureType.CIRCLE)
-                .setFigureRequestParam(Util.toJson(circleParam));
-        String post = rest.post(url, req, HttpStatus.CREATED);
-        CalculateResponse calculateResponse = Util.fromJson(post, CalculateResponse.class);
+        FigureCalculateRequest.CircleFigureCalculateRequest circleFigureCalculateRequest =
+                new FigureCalculateRequest.CircleFigureCalculateRequest();
+        circleFigureCalculateRequest.setFigureType(FigureType.CIRCLE);
+        circleFigureCalculateRequest.setRadius(radius);
+        String post = rest.post(url, circleFigureCalculateRequest, HttpStatus.CREATED);
+        FigureCalculateResponse calculateResponse = Util.fromJson(post, FigureCalculateResponse.class);
         assertThat(calculateResponse.getArea(), closeTo(Math.PI * Math.pow(radius, 2), 0.001));
         assertThat(calculateResponse.getPerimeter(), closeTo(2 * Math.PI * radius, 0.001));
     }

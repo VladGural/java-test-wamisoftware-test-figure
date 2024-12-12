@@ -1,7 +1,7 @@
 package com.example.figure.calculate;
 
-import com.example.figure.domain.CalculateRequest;
-import com.example.figure.domain.CalculateResponse;
+import com.example.figure.domain.FigureCalculateRequest;
+import com.example.figure.domain.FigureCalculateResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -36,9 +36,9 @@ class CalculateResource {
     })
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping("/properties")
-    CalculateResponse calculateFigureProperties(@RequestBody @Valid CalculateRequest request) {
+    FigureCalculateResponse calculateFigureProperties(@RequestBody @Valid FigureCalculateRequest request) {
         logger.info("User try to calculate property of: {} figure", request.getFigureType());
-        CalculateResponse response = service.calculateFigureProperties(request);
+        FigureCalculateResponse response = service.calculateFigureProperties(request);
         logger.info("Successfully calculate: {} properties: {}", request.getFigureType(), response);
         return response;
     }

@@ -1,8 +1,8 @@
 package com.example.figure.calculate;
 
-import com.example.figure.domain.CalculateRequest;
-import com.example.figure.domain.CalculateResponse;
-import com.example.figure.figure.FigureCalculateService;
+import com.example.figure.domain.FigureCalculateRequest;
+import com.example.figure.domain.FigureCalculateResponse;
+import com.example.figure.domain.FigureCalculateService;
 import com.example.figure.figure.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +22,7 @@ class CalculateService {
         this.figureHolder = figureHolder;
     }
 
-    CalculateResponse calculateFigureProperties(CalculateRequest request) {
+    FigureCalculateResponse calculateFigureProperties(FigureCalculateRequest request) {
         FigureCalculateService figureCalculateService = figureHolder.getFigureCalculateService(request.getFigureType());
         return figureCalculateService.calculate(request);
     }

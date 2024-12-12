@@ -1,8 +1,8 @@
 package com.example.figure.figure;
 
-import com.example.figure.domain.CalculateRequest;
-import com.example.figure.domain.CalculateResponse;
-import com.example.figure.util.Util;
+import com.example.figure.domain.FigureCalculateRequest;
+import com.example.figure.domain.FigureCalculateResponse;
+import com.example.figure.domain.FigureCalculateService;
 
 /**
  * @author Vladyslav Gural
@@ -11,14 +11,15 @@ import com.example.figure.util.Util;
 public class TriangleCalculateService implements FigureCalculateService {
 
     @Override
-    public CalculateResponse calculate(CalculateRequest request) {
-        TriangleParam triangle = Util.fromJson(request.getFigureRequestParam(), TriangleParam.class);
+    public FigureCalculateResponse calculate(FigureCalculateRequest request) {
+        FigureCalculateRequest.TriangleFigureCalculateRequest triangle =
+                (FigureCalculateRequest.TriangleFigureCalculateRequest) request;
         double a = triangle.getALength();
         double b = triangle.getBLength();
         double c = triangle.getCLength();
         double perimeter = a + b + c;
         double halfPerimeter = perimeter / 2;
-        CalculateResponse calculateResponse = new CalculateResponse();
+        FigureCalculateResponse calculateResponse = new FigureCalculateResponse();
         calculateResponse.setArea(Math.sqrt(halfPerimeter * (halfPerimeter - a) * (halfPerimeter - b *
                 (halfPerimeter - c))));
         calculateResponse.setPerimeter(perimeter);
