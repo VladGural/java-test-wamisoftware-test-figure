@@ -1,7 +1,13 @@
 package com.example.figure.calculate;
 
 import com.example.figure.component_test.BaseComponentTest;
+import com.example.figure.domain.CalculateRequest;
+import com.example.figure.domain.CalculateResponse;
 import com.example.figure.domain.type.FigureType;
+import com.example.figure.figure.CircleParam;
+import com.example.figure.figure.RectangleParam;
+import com.example.figure.figure.SquareParam;
+import com.example.figure.figure.TriangleParam;
 import com.example.figure.util.Util;
 import org.springframework.http.HttpStatus;
 
