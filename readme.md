@@ -85,7 +85,7 @@ METHOD: POST
 REQUEST:
 {
     "figureType": "SQUARE",
-    "figureRequestParam": "{\"length\":10.0}"
+    "length": 10.0
 }
 
 RESPONSE
@@ -103,7 +103,8 @@ METHOD: POST
 REQUEST:
 {
     "figureType": "RECTANGLE",
-    "figureRequestParam": "{\"alength\":10.0,\"blength\":20.0}"
+    "alength": 10.0,
+    "blength": 20.0
 }
 
 RESPONSE
@@ -121,7 +122,9 @@ METHOD: POST
 REQUEST:
 {
     "figureType": "TRIANGLE",
-    "figureRequestParam": "{\"alength\":3.0,\"blength\":4.0,\"blength\":5.0}"
+    "alength": 3.0,
+    "blength": 4.0,
+    "clength": 5.0
 }
 
 RESPONSE
@@ -139,7 +142,7 @@ METHOD: POST
 REQUEST:
 {
     "figureType": "CIRCLE",
-    "figureRequestParam": "{\"radius\":1.0}"
+    "radius":1.0
 }
 
 RESPONSE
@@ -148,3 +151,5 @@ RESPONSE
     "perimeter": 6.283185307179586
 }
 ```
+
+If in the browser type http://localhost:8080/swagger-ui.html URL, we will view OpenAPI info about our endpoint.

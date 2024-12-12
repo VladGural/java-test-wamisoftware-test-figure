@@ -4,3 +4,9 @@ server:
 spring:
   application:
     name: figure
+
+springdoc:
+  api-docs:
+    path: "/api-docs"
+  swagger-ui:
+    path: "/swagger-ui.html"
