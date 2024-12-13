@@ -4,10 +4,10 @@ import com.example.figure.domain.FigureCalculateService;
 import com.example.figure.domain.type.FigureType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 /**
  * @author Vladyslav Gural
@@ -17,19 +17,19 @@ import java.util.Map;
 public class FigureHolder {
     private static final Logger logger = LoggerFactory.getLogger(FigureHolder.class);
 
-    private final Map<FigureType, FigureCalculateService> serviceMap = new HashMap<>();
-
-    public FigureHolder() {
-        serviceMap.put(FigureType.SQUARE, new SquareCalculateService());
-        serviceMap.put(FigureType.RECTANGLE, new RectangleCalculateService());
-        serviceMap.put(FigureType.TRIANGLE, new TriangleCalculateService());
-        serviceMap.put(FigureType.CIRCLE, new CircleCalculateService());
-    }
+    @Autowired
+    private List<FigureCalculateService> figureServices;
 
     public FigureCalculateService getFigureCalculateService(FigureType figureType) {
-        FigureCalculateService service = serviceMap.get(figureType);
+        FigureCalculateService service = getFigureService(figureType);
         checkService(service, figureType);
         return service;
+    }
+
+    private FigureCalculateService getFigureService(FigureType serviceType) {
+        return figureServices.stream()
+                .filter(s -> s.getFigureServiceType().equals(serviceType))
+                .findFirst().orElse(null);
     }
 
     private void checkService(FigureCalculateService service, FigureType figureType) {
