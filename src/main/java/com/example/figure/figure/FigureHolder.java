@@ -4,7 +4,6 @@ import com.example.figure.domain.FigureCalculateService;
 import com.example.figure.domain.type.FigureType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,8 +16,11 @@ import java.util.List;
 public class FigureHolder {
     private static final Logger logger = LoggerFactory.getLogger(FigureHolder.class);
 
-    @Autowired
-    private List<FigureCalculateService> figureServices;
+    private final List<FigureCalculateService> figureServices;
+
+    public FigureHolder(List<FigureCalculateService> figureServices) {
+        this.figureServices = figureServices;
+    }
 
     public FigureCalculateService getFigureCalculateService(FigureType figureType) {
         FigureCalculateService service = getFigureService(figureType);
