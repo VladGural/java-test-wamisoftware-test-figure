@@ -7,6 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @author Vladyslav Gural
@@ -16,22 +19,17 @@ import java.util.List;
 public class FigureHolder {
     private static final Logger logger = LoggerFactory.getLogger(FigureHolder.class);
 
-    private final List<FigureCalculateService> figureServices;
+    private final Map<FigureType, FigureCalculateService> figureServicesMap;
 
     public FigureHolder(List<FigureCalculateService> figureServices) {
-        this.figureServices = figureServices;
+        this.figureServicesMap = figureServices.stream()
+                .collect(Collectors.toMap(FigureCalculateService::getFigureServiceType, Function.identity()));
     }
 
     public FigureCalculateService getFigureCalculateService(FigureType figureType) {
-        FigureCalculateService service = getFigureService(figureType);
+        FigureCalculateService service = figureServicesMap.get(figureType);
         checkService(service, figureType);
         return service;
-    }
-
-    private FigureCalculateService getFigureService(FigureType serviceType) {
-        return figureServices.stream()
-                .filter(s -> s.getFigureServiceType().equals(serviceType))
-                .findFirst().orElse(null);
     }
 
     private void checkService(FigureCalculateService service, FigureType figureType) {
